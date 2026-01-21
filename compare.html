@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description" content="Compare Geico, State Farm, and top auto insurance providers. Call now for a free quote.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- RESET & TYPOGRAPHY --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f0f2f5; padding-bottom: 70px; /* Space for sticky footer */ }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* --- UTILITIES --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .text-center { text-align: center; }
+        .bold { font-weight: 700; }
+        .text-green { color: #28a745; }
+        
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: #28a745; /* Green for Go/Call */
+            color: white;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn:hover { background-color: #218838; transform: translateY(-2px); }
+        
+        /* Pulse Animation for Call Buttons */
+        .pulse-anim { animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+
+        /* --- HEADER --- */
+        header { background: #fff; box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; padding: 15px 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: #003366; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+        .logo i { color: #28a745; font-size: 1.8rem; }
+        
+        .header-phone { font-weight: 700; color: #003366; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+        .header-phone:hover { color: #28a745; }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            background: linear-gradient(135deg, #003366 0%, #0056b3 100%); 
+            color: white; 
+            padding: 50px 20px 80px; 
+            text-align: center; 
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 15px; line-height: 1.1; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .hero p { font-size: 1.3rem; margin-bottom: 30px; opacity: 0.95; font-weight: 300; }
+        
+        /* --- COMPARISON TABLE --- */
+        .comparison-wrapper { margin-top: -50px; position: relative; z-index: 10; }
+        .comparison-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        
+        /* Table Headers (Desktop) */
+        .comp-header { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; background: #f8f9fa; padding: 15px 25px; font-weight: 700; color: #666; border-bottom: 2px solid #eee; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        
+        /* Table Rows */
+        .comp-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; padding: 25px; border-bottom: 1px solid #eee; align-items: center; transition: 0.2s; }
+        .comp-row:hover { background-color: #fcfcfc; }
+        .comp-row:last-child { border-bottom: none; }
+
+        /* Company Info */
+        .company-info { display: flex; align-items: center; gap: 15px; }
+        .logo-circle { width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: white; font-size: 1.2rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .company-name h3 { font-size: 1.2rem; margin: 0; color: #333; }
+        .company-name span { font-size: 0.85rem; color: #777; }
+
+        /* Ratings & Features */
+        .rating { color: #ffc107; font-size: 1rem; }
+        .feature-badge { background: #e8f5e9; color: #2e7d32; padding: 5px 10px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
+
+        /* --- STICKY FOOTER (MOBILE) --- */
+        .sticky-call-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: white; padding: 12px 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.1); z-index: 9999; display: none; }
+        .sticky-call-btn { display: block; width: 100%; background-color: #28a745; color: white; text-align: center; padding: 14px; border-radius: 8px; font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3); animation: pulse 2s infinite; }
+
+        /* --- DISCLAIMER --- */
+        .disclaimer { margin-top: 50px; background: white; padding: 40px 20px; font-size: 0.8rem; color: #888; text-align: center; line-height: 1.6; border-top: 1px solid #eee; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero { padding: 40px 15px 70px; }
+            .hero h1 { font-size: 2rem; }
+            .comp-header { display: none; } /* Hide table headers on mobile */
+            .comp-row { grid-template-columns: 1fr; gap: 15px; padding: 20px; text-align: center; position: relative; }
+            .company-info { flex-direction: column; gap: 10px; margin-bottom: 10px; }
+            .btn { width: 100%; }
+            .header-phone { display: none; } /* Hide header phone on mobile to declutter */
+            .sticky-call-bar { display: block; } /* Show sticky footer */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shield-alt"></i> Geico<span style="color:#333">AutoUSA</span>
+            </a>
+            <a href="tel:8002594890" class="header-phone">
+                <i class="fas fa-phone-alt"></i> (800) 259-4890
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Compare Top Auto Insurance Rates</h1>
+            <p>Drivers save an average of <strong>$500/year</strong> by comparing top providers. Call now to lock in your rate.</p>
+            
+            <div style="margin-top: 25px;">
+                <a href="tel:8002594890" class="btn pulse-anim" style="background: white; color: #003366; max-width: 350px; margin: 0 auto;">
+                    <i class="fas fa-phone-volume"></i> (800) 259-4890
+                </a>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">Free Quote • No Obligation • 24/7 Support</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container comparison-wrapper">
+        <div class="comparison-card">
+            
+            <div class="comp-header">
+                <div>Top Providers</div>
+                <div class="text-center">Rating</div>
+                <div class="text-center">Key Feature</div>
+                <div class="text-center">Get Quote</div>
+            </div>
+
+            <div class="comp-row">
+                <div class="company-info">
+                    <div class="logo-circle" style="background:#0056b3;">G</div>
+                    <div class="company-name">
+                        <h3>Geico</h3>
+                        <span>Best for Online Experience</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                    <span class="bold">4.9/5</span>
+                </div>
+                <div class="text-center">
+                    <span class="feature-badge">Lowest Rates</span>
+                </div>
+                <div>
+                    <a href="tel:8002594890" class="btn">Call For Quote</a>
+                </div>
+            </div>
+
+            <div class="comp-row">
+                <div class="company-info">
+                    <div class="logo-circle" style="background:#e31837;">SF</div>
+                    <div class="company-name">
+                        <h3>State Farm</h3>
+                        <span>Best for Personal Service</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <span class="bold">4.8/5</span>
+                </div>
+                <div class="text-center">
+                    <span class="feature-badge">Local Agents</span>
+                </div>
+                <div>
+                    <a href="tel:8002594890" class="btn">Call For Quote</a>
+                </div>
+            </div>
+
+            <div class="comp-row">
+                <div class="company-info">
+                    <div class="logo-circle" style="background:#0075bf;">P</div>
+                    <div class="company-name">
+                        <h3>Progressive</h3>
+                        <span>Best for High-Risk Drivers</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                    <span class="bold">4.5/5</span>
+                </div>
+                <div class="text-center">
+                    <span class="feature-badge">Name Your Price</span>
+                </div>
+                <div>
+                    <a href="tel:8002594890" class="btn">Call For Quote</a>
+                </div>
+            </div>
+
+            <div class="comp-row">
+                <div class="company-info">
+                    <div class="logo-circle" style="background:#004a98;">A</div>
+                    <div class="company-name">
+                        <h3>Allstate</h3>
+                        <span>Best for Safe Drivers</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i></div>
+                    <span class="bold">4.3/5</span>
+                </div>
+                <div class="text-center">
+                    <span class="feature-badge">Safe Rewards</span>
+                </div>
+                <div>
+                    <a href="tel:8002594890" class="btn">Call For Quote</a>
+                </div>
+            </div>
+
+            <div class="comp-row">
+                <div class="company-info">
+                    <div class="logo-circle" style="background:#ffc107; color:black;">LM</div>
+                    <div class="company-name">
+                        <h3>Liberty Mutual</h3>
+                        <span>Best for New Cars</span>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                    <span class="bold">4.4/5</span>
+                </div>
+                <div class="text-center">
+                    <span class="feature-badge">Custom Policies</span>
+                </div>
+                <div>
+                    <a href="tel:8002594890" class="btn">Call For Quote</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="container" style="margin-top: 60px;">
+        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center;">
+            <h2 style="color:#003366; margin-bottom: 20px;">Why Compare With GeicoAutoUSA?</h2>
+            <div class="grid grid-3">
+                <div>
+                    <i class="fas fa-bolt fa-2x text-green" style="margin-bottom:15px;"></i>
+                    <h3>Fast Quotes</h3>
+                    <p>Get connected to a licensed agent in under 2 minutes.</p>
+                </div>
+                <div>
+                    <i class="fas fa-piggy-bank fa-2x text-green" style="margin-bottom:15px;"></i>
+                    <h3>Huge Savings</h3>
+                    <p>Drivers save up to $500/year by switching providers.</p>
+                </div>
+                <div>
+                    <i class="fas fa-user-shield fa-2x text-green" style="margin-bottom:15px;"></i>
+                    <h3>Trusted Partners</h3>
+                    <p>We only work with top-rated, secure insurance carriers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="disclaimer">
+        <div class="container">
+            <p><strong>Advertising Disclosure:</strong> GeicoAutoUSA.com is an independent insurance marketplace and marketing partner. We are not an insurance company and do not issue policies. We connect consumers with licensed insurance agents and providers. The quotes and offers you see on this website are provided by third-party carriers. We may receive compensation when you click on links or call phone numbers on our site. This site is not affiliated with Geico, State Farm, Progressive, or any specific carrier mentioned unless explicitly stated. All trademarks and copyrights are the property of their respective owners.</p>
+            <br>
+            <p>&copy; 2025 GeicoAutoUSA. All Rights Reserved. <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms</a></p>
+        </div>
+    </div>
+
+    <div class="sticky-call-bar">
+        <a href="tel:8002594890" class="sticky-call-btn">
+            <i class="fas fa-phone-alt"></i> CALL FOR FREE QUOTE
+        </a>
+    </div>
+
+</body>
+</html>
